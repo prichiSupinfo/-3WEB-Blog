@@ -1,7 +1,7 @@
 <template>
   <div class="form-wrapper">
     <div class="form-title">
-      <h1>Register</h1>
+      <h1>Login</h1>
     </div>
 
     <div class="form-divider"></div>
@@ -12,15 +12,7 @@
       </div>
 
       <div class="form-group">
-        <input type="email" name="email" placeholder="ENTER EMAIL" v-model="newUser.email">
-      </div>
-
-      <div class="form-group">
         <input type="password" name="password" placeholder="ENTER PASSWORD" v-model="newUser.password">
-      </div>
-
-      <div class="form-group">
-        <input type="password" name="confirmPassword" placeholder="CONFIRM PASSWORD" v-model="newUser.confirmPassword">
       </div>
 
       <input type="submit">
