@@ -14,23 +14,32 @@
       <div class="form-group">
         <input type="password" name="password" placeholder="ENTER PASSWORD" v-model="newUser.password">
       </div>
-
-      <input type="submit">
       
+      <button class="form-button" @click.prevent='login'>Log In</button>
     </form>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex' 
 export default {
   data(){
     return {
       newUser: {
         username : '',
-        email : '',
-        password : '',
-        confirmPassword : ''
+        password : ''
       }
+    }
+  },
+
+  methods: {
+    ...mapActions([
+      'userAuthAction'
+    ]),
+    
+    login() {
+      let payload = this.newUser
+      this.userAuthAction(payload);
     }
   }
 }

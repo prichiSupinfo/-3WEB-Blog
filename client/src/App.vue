@@ -1,38 +1,27 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <div id="nav" v-if="!status.loggedIn">
       <router-link to="/">Home</router-link> |
       <router-link to="/register">Register</router-link> |
       <router-link to="/login">Login</router-link>
+    </div>
+
+    <div id="nav" v-else>
+      <router-link to="/">Articles</router-link> |
+      <router-link to="/register">Liked Shits</router-link> |
+      <router-link to="/login">Hope it changes</router-link>
     </div>
     <router-view/>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  
-  
-}
-
-body { 
-  height: 100%;
-  background-color: #263238;
-}
-
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+<script>
+import { mapState } from 'vuex'
+export default {
+  computed : {
+    ...mapState([
+      'status'
+    ])
   }
 }
-</style>
+</script>

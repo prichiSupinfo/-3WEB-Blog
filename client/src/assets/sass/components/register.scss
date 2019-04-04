@@ -7,21 +7,20 @@
     padding: 20px;
     padding-bottom: 40px;
     border-radius: 5px;
-    background-color: #2c3940;
+    background-color: $form-color;
     box-shadow: 0 1px 6px rgba(0,0,0,.3);
-    color: white;
+    color: $font-color;
   }
 
-  form {
-    width: 100%;
-    
-  }
+form {
+  width: 100%;
+}
 
-  .form-group {
-    width: 100%;
-    border-bottom: 2px solid white;
-    margin-top: 20px;
-  }
+.form-group {
+  width: 100%;
+  border-bottom: 2px solid $font-color;
+  margin-top: 20px;
+}
 
   input {
     margin: 20px 0 0 0;
@@ -29,7 +28,7 @@
     background: transparent;
     outline: none;
     border: none;
-    color: white;
+    color: $font-color;
     padding: 30px 0 0;
 
   }
@@ -44,7 +43,7 @@
   
 
   input::placeholder {
-    color: white;
+    color: $font-color;
   }
 
   input:focus::placeholder{
@@ -58,5 +57,26 @@
   }
 
   .form-divider {
-    border-top: 1px solid white;
+    border-top: 1px solid $font-color;
   }
+
+  .form-button {
+    outline: none;
+    margin: 50px 0 0;
+    background-color: #fff;
+    width: 150px;
+    height: 40px;
+    border: 1.5px solid $font-color;
+    border-radius: 50px;
+    transition: background 0.8s;
+  }
+
+  .form-button:hover {
+    background: $font-color radial-gradient(circle, transparent 1%, $font-color 1%) center/15000%;
+  }
+  .form-button:active {
+    background-color: $font-color;
+    background-size: 100%;
+    transition: background 0s;
+  }
+  

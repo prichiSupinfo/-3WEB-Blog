@@ -23,13 +23,14 @@
         <input type="password" name="confirmPassword" placeholder="CONFIRM PASSWORD" v-model="newUser.confirmPassword">
       </div>
 
-      <input type="submit">
+      <button class="form-button">Register</button>
       
     </form>
   </div>
 </template>
 
 <script>
+import func from '../../vue-temp/vue-editor-bridge';
 export default {
   data(){
     return {
@@ -40,6 +41,9 @@ export default {
         confirmPassword : ''
       }
     }
+  },
+  methods: {
+    
   }
 }
 </script>
