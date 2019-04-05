@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="blog-detail-wrapper">
         <article>
             <header>
                 <div class="cs-header-left">
@@ -42,9 +42,9 @@
             </div>
 
             <div class="comment-card">
-                <div class="photo">
-                    <div class="avatar">
-
+                <div class="photo" >
+                    <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg')">
+                        
                     </div>
                 </div>
                 <div class="comment-block">
@@ -68,6 +68,20 @@ export default {
 
 <style scoped>
 
+    .blog-detail-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        grid-gap: 2em;
+    }
+
+    .blog-detail-wrapper article {
+        grid-column: 1/4;
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        grid-gap: 2em;
+        
+    }
+
     .blog-detail-title {
         font-size: 1.8em;
         word-wrap:break-word;
@@ -80,23 +94,57 @@ export default {
     }
 
     .cs-header-left {
-        position: fixed;
-        margin: auto 25px; 
-        width: 25%;
+        align-self: center;
     }
     article {
-        display: table;
+        
     }
 
     article .content, article header {
-        display: table-cell;
-        vertical-align: top;
+        
     }
 
-    .content{
-        width: 69%;
+    .content, .comment-card{
         text-align: justify;
         font-size: 1.2em;
         padding: 0 2.5em 0 0;
     }
+
+    .comment-card {
+        margin-bottom: 25px;
+        
+    }
+
+    /* COMMENTS */
+    textarea {
+        outline: none;
+        border: none;
+        display: block;
+        color: #8AC1FF;
+    }
+
+    textarea::placeholder{
+        color: #B5D7FF;
+    }
+
+    .comment-block {
+        background-color: #2D2D2A;
+        border-radius: 0.2rem;
+        box-shadow: 0 1px 3px 0 rgb(255, 255, 255,0.4);
+        padding: 1rem;
+    }
+
+    .comments {
+        grid-column: 2/4
+    }
+
+    .photo {
+        width: 200px;
+    }
+
+    .photo .avatar {
+        border-radius: 50%;
+        background-size: contain;
+    }
+
 </style>
