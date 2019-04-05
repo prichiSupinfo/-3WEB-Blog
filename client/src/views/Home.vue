@@ -1,18 +1,36 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- <h1>All Articles</h1>
+    <div class="blog-post" v-for="index in 10">
+      <BlogCard :i='index' /> 
+    </div> -->
+
+    <BlogDetail />
+
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import BlogCard from '@/components/BlogCard.vue'
+import BlogDetail from '@/views/BlogDetail.vue'
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
+    BlogCard,
+    BlogDetail
+  },
+  data(){
+    return {
+      
+    }
   }
 }
 </script>
+
+<style scoped>
+  .blog-post {
+    margin-top: 50px;
+  }
+</style>
