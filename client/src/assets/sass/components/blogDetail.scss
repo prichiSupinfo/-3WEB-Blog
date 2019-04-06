@@ -1,0 +1,59 @@
+.blog-detail-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-gap: 2em;
+}
+
+.blog-detail-wrapper article {
+    grid-column: 1/4;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-gap: 2em;
+    
+}
+
+.blog-detail-title {
+    font-size: 1.8em;
+    word-wrap:break-word;
+}
+
+.date {
+    color: #B5D7FF;
+    font-weight: 100;
+    font-size: 0.7em;
+}
+
+.cs-header-left {
+    align-self: center;
+}
+
+.content, .comment-card{
+    text-align: justify;
+    font-size: 1.2em;
+    padding: 0 2.5em 0 0;
+}
+
+.comment-card {
+    margin-bottom: 25px;
+    
+}
+
+.like-position {
+    display: flex;
+    justify-content: center;
+}
+
+.like-button {
+    width: 100px;
+    height: 100px;
+    background: url("https://cssanimation.rocks/images/posts/steps/heart.png") no-repeat;
+    background-position: 0 0;
+    cursor: pointer;
+    transition: background-position 1s steps(28);
+    transition-duration: 0s;
+    
+    &.has-liked {
+      transition-duration: 1s;
+      background-position: -2800px 0;
+    }
+}

@@ -1,0 +1,68 @@
+textarea {
+    outline: none;
+    border: none;
+    display: block;
+    color: #8AC1FF;
+    background: transparent;
+    resize: none;
+    width: 95%;
+    margin: 1em 0 0 10px;
+}
+
+textarea::placeholder{
+    color: #B5D7FF;
+}
+
+.comment-block {
+    background-color: #2D2D2A;
+    border-radius: 0.2rem;
+    box-shadow: 0 1px 3px 0 rgba(255, 255, 255,0.4);
+}
+
+.comments {
+    grid-column: 2/4
+}
+
+
+.profile-name p{
+    margin: 0;
+    padding: 0.3em 10px;
+}
+
+.profile-name{
+    width: 100%;
+    display: block;
+    border-bottom: 1px solid #fff;
+}
+
+.comment-date p{
+    margin-top: 1em;
+    font-size: 0.7em;
+    font-weight: 200;
+    color: #B5D7FF;
+    padding: 10px;
+}
+
+.comment-send {
+    p{
+        position: relative;
+        left: 95%;
+        width: 26px;
+        margin-top: 1em;
+        font-size: 0.7em;
+        font-weight: 200;
+        color: #B5D7FF;
+        cursor: pointer;
+        padding-bottom: 10px;
+        
+    }
+    p:hover{
+        color: #5ad67d;
+    }
+}
+
+.comment-text{ 
+    padding: 10px 10px 0;
+    margin: 0;
+    font-size: 0.9em;
+}
