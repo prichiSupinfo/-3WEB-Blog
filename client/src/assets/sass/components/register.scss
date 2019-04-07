@@ -22,7 +22,7 @@ form {
   margin-top: 20px;
 }
 
-  input {
+.form-group input {
     margin: 20px 0 0 0;
     width: 100%;
     background: transparent;
@@ -30,27 +30,16 @@ form {
     border: none;
     color: $font-color;
     padding: 30px 0 0;
-
+    &::placeholder {
+      color: $font-color;
+    }
+    &:focus::placeholder {
+      color: #297773;
+      position: relative;
+      top: -20px;
+    }
   }
 
-  label {
-    position: relative;
-    top: 3.4rem;
-    right: 9.8rem;
-    font-size: 0.8rem;
-  }
-
-  
-
-  input::placeholder {
-    color: $font-color;
-  }
-
-  input:focus::placeholder{
-    color: #297773;
-    position: relative;
-    top: -20px;
-  }
 
   .form-title {
     text-align: center;
@@ -69,14 +58,16 @@ form {
     border: 1.5px solid $font-color;
     border-radius: 50px;
     transition: background 0.8s;
+    &:hover {
+      background: $font-color radial-gradient(circle, transparent 1%, $green 1%) center/15000%;
+    }
+    &:active {
+      background-color: $green;
+      background-size: 100%;
+      transition: background 0s;
+    }
   }
 
-  .form-button:hover {
-    background: $font-color radial-gradient(circle, transparent 1%, $font-color 1%) center/15000%;
-  }
-  .form-button:active {
-    background-color: $font-color;
-    background-size: 100%;
-    transition: background 0s;
-  }
+  
+  
   

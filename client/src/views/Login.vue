@@ -27,7 +27,8 @@ export default {
     return {
       newUser: {
         username : '',
-        password : ''
+        password : '',
+        isAdmin : false
       }
     }
   },

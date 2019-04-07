@@ -1,5 +1,5 @@
 export default {
   status: {
   },
-  user: null
+  user: { isAdmin: true }
 }

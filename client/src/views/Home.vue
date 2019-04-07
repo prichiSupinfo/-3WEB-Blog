@@ -1,29 +1,36 @@
 <template>
-  <div class="home">
-    <!-- <h1>All Articles</h1>
+  <div class="home" v-if="status.loggedIn">
+    <h1>All Articles</h1>
     <div class="blog-post" v-for="index in 10">
       <BlogCard :i='index' /> 
-    </div> -->
-
-    <BlogDetail />
+    </div> 
 
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import BlogCard from '@/components/BlogCard.vue'
-import BlogDetail from '@/views/BlogDetail.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'home',
   components: {
-    BlogCard,
-    BlogDetail
+    BlogCard
   },
   data(){
     return {
       
+    }
+  },
+  computed: {
+    ...mapState([
+      'status'
+    ]) 
+  },
+
+  created(){
+    if (!this.status.loggedIn) {
+      this.$router.push('login')
     }
   }
 }
