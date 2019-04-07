@@ -5,8 +5,8 @@ var userController = require('../controllers/user.controller');
 router.route('/register')
     .post(userController.register)
     .get(function(request, response,next) {
+        //TODO : send register vue
         response.writeHead(200,{'type':'text/html'});
-        response.write("<form method=\"POST\"> </form>");
         response.end();
         next();
     });
@@ -14,8 +14,8 @@ router.route('/register')
 router.route('/login')
     .post(userController.login)
     .get(function(request, response,next) {
+        //TODO : send login vue
         response.writeHead(200,{'type':'text/html'});
-        response.write("<form method=\"POST\"> </form>");
         response.end();
         next();
     });

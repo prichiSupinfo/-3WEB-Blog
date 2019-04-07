@@ -1,0 +1,4 @@
+{
+    "dbURL": "mongodb://localhost/blog",
+    "secret": "IHTBUMq3Wn2KUQgzQRDArohbmozLMn4YXJdTjP792HBUEQtlo57GbNaOAwO4CGqjEadlugU5hhkkgCMljTxBdlgSDeZ3KU3Pxw8r"
+}

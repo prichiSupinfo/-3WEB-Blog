@@ -2,13 +2,18 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+
+var config = require('./config.json')
 var port = process.env.PORT || 1337;
+
+mongoose.connect(config.dbURL, { useNewUrlParser: true })
 
 var app = express();
 app.use(express.static('../client/public'));
 
 //Middlewares
-app.unsubscribe(bodyParser.json());
+app.use(bodyParser.json());
 
 
 //Routes
