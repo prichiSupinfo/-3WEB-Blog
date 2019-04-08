@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var cors = require('cors');
 
 var config = require('./config.json');
 var port = config.port;
@@ -12,10 +13,11 @@ mongoose.connect(config.dbURL, { useNewUrlParser: true })
 var app = express();
 app.use(express.static('../client/public'));
 
+
 //Middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+app.use(cors())
 
 //Routes
 app.use('/auth',require('./routes/user.route'))
