@@ -1,5 +1,5 @@
 <template>
-  <div class="home" v-if="status.loggedIn">
+  <div class="home">
     <h1>All Articles</h1>
     <div class="blog-post" v-for="index in 10">
       <BlogCard :i='index' /> 
@@ -26,12 +26,6 @@ export default {
     ...mapState([
       'status'
     ]) 
-  },
-
-  created(){
-    if (!this.status.loggedIn) {
-      this.$router.push('login')
-    }
   }
 }
 </script>
