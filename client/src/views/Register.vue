@@ -23,27 +23,68 @@
         <input type="password" name="confirmPassword" placeholder="CONFIRM PASSWORD" v-model="newUser.confirmPassword">
       </div>
 
-      <button class="form-button">Register</button>
-      
+      <button class="form-button" @click.prevent="register">Register</button> 
     </form>
   </div>
 </template>
 
 <script>
+import { constants } from 'crypto';
+import { Promise } from 'q';
 export default {
-  data(){
+  data () {
     return {
       newUser: {
-        username : '',
-        email : '',
-        password : '',
-        confirmPassword : ''
+        username: null,
+        email: null,
+        password: null,
+        confirmPassword: null
       }
     }
   },
   methods: {
     register () {
+      if(this.checkValidity()) {
+        //TODO: API CALL
+        const requestOptions = {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json', 
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "Access-Control-Allow-Credentials": "true"
+          },
+          body: JSON.stringify({ "username": this.newUser.username, "email": this.newUser.email, "password": this.newUser.password })
+        }
+
+        var response = fetch('http://localhost:1337/auth/register', requestOptions)
       
+        console.log(response)
+      }
+    },
+
+    checkValidity () {
+      if (!this.newUser.username || !this.newUser.email || !this.newUser.password || !this.newUser.confirmPassword) {
+        return false 
+      }
+        return true
+    },
+
+    handleResponse (response) {
+      return response.text().then(text => {
+        const data = text && JSON.parse(text);
+        if (!response.ok){
+          if (response.status === 401) {
+            
+          }
+
+          const error = (data && data.message) || response.statusText;
+          return Promise.reject(error)
+        }
+
+        return data
+      })
     }
   }
 }
