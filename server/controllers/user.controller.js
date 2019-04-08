@@ -1,12 +1,12 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
 const uuidv4 = require('uuid/v4');
-const userValidation = require('../utils/userValidation')
-
+const userValidation = require('../utils/userValidation');
+const emailValidation = require('../utils/email');
 
 module.exports = {
     register: async (request, response, next) => {
-
+        
         var { username, password, email } = request.body;
 
         var usernameExist = await User.findOne({ username });
@@ -17,17 +17,21 @@ module.exports = {
         } else if(emailExist) {
             return response.status(403).send({ error:'Email already use' });
         }
-
+        
         var newUser = new User({ username, password, email });
 
         newUser.password = await bcrypt.hash(newUser.password, 10);
-
+        newUser.validEmail = false;
         newUser.uuid = uuidv4();
 
         await newUser.save();
 
+        //Send email with link to email validation
+        emailValidation.sendConfirmationMail(newUser);
+
         response.status(200).json({ 
-            session: newUser.username + "." + newUser.uuid
+            success: "true",
+            info: "Email sent",
         });
     },
 
@@ -43,6 +47,10 @@ module.exports = {
         var passwordMatch = await bcrypt.compare(password,user.password);
         if(!passwordMatch){
             return response.status(403).send({ error:'Passwords don\'t match'});
+        }
+
+        if(!user.validEmail){
+            return response.status(403).send({ error:'Please first confirm your email'});
         }
 
         user.uuid = uuidv4();
@@ -70,13 +78,37 @@ module.exports = {
         });
     },
 
+    validateEmail: async(request, response, next) =>{
+        var { username, uuid } = request.body;
+        
+        var user = await User.findOne({ username });
+        
+        if (!user){
+            return response.status(403).send({error : "Oups something went wrong please try again", "details" : "user doesn't exist"});
+        }
+        if (user.validEmail){
+            return response.status(403).send({error : "Email already confirm"});
+        }
+        if (user.uuid !== uuid || user.uuid === ""){
+            return response.status(403).send({error : "Oups something went wrong please try again", "details" : "uuid doesn't match"});
+        }
+
+        user.validEmail = true;
+
+        await user.save();
+
+        response.status(200).json({ 
+            session: user.username + "." + user.uuid
+        });
+    },
+
     secret: async(request, response, next) => {
         var user = await userValidation.getUserBySession(request.body);
 
         if(!user){
             return response.status(403).send({ error:'wrong session token' });
         }
-        
+
         console.log('User manage to get secret');
         response.status(200).send({ secret: "secret info"});
     }

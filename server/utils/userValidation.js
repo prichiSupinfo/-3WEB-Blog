@@ -10,7 +10,7 @@ module.exports = {
 
         var user = await User.findOne({ username});
 
-        if (!user || user.uuid !== uuid || user.uuid === ""){
+        if (!user || user.uuid !== uuid || user.uuid === "" || !user.validEmail){
             return false;
         }
         return user;
