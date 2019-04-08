@@ -1,4 +1,5 @@
-var router = require('express-promise-router')();
+const router = require('express-promise-router')();
+const User = require('../models/user.model'); 
 
 var userController = require('../controllers/user.controller');
 
@@ -19,5 +20,9 @@ router.route('/login')
         response.end();
         next();
     });
+
+router.use('/logout', userController.logout);
+
+router.use('/secret', userController.secret)
 
 module.exports = router;
