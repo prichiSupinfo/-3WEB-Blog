@@ -22,6 +22,7 @@ module.exports = {
 
         newUser.password = await bcrypt.hash(newUser.password, 10);
         newUser.validEmail = false;
+        newUser.isAdmin = false;
         newUser.uuid = uuidv4();
 
         await newUser.save();
