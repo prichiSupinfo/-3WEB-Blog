@@ -18,6 +18,8 @@
     "express-promise-router": "^3.0.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.4.22",
+    "nodemailer": "^6.1.0",
+    "nodemon": "^1.18.10",
     "uuid": "^3.3.2"
   }
 }

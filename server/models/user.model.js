@@ -7,7 +7,8 @@ const userSchema = new Schema({
     email: {type: String, required: true, lowercase: true, unique: true},
     uuid: String,
     likedArticles: {type: Array},
-
+    validEmail: {type: Boolean, required: true},
+    isAdmin: {type: Boolean, required: true}
 });
 
 var User = mongoose.model('User', userSchema);

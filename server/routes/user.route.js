@@ -21,8 +21,13 @@ router.route('/login')
         next();
     });
 
-router.use('/logout', userController.logout);
+router.route('/logout')
+    .post(userController.logout);
 
-router.use('/secret', userController.secret)
+router.route('/secret')
+    .post(userController.secret);
+
+router.route('/emailValidation')
+    .post(userController.validateEmail)
 
 module.exports = router;
