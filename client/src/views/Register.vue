@@ -60,10 +60,13 @@ export default {
 
         var response = fetch('http://localhost:1337/auth/register', requestOptions)
         .then(res => {
-          console.log(res.json())
+          return res.json()
         })
         .then (json => {
-          console.log(json);
+          if(json.success) {
+            console.log("registered")
+            this.$router.push({name: 'confirmEmail'})
+          }
         })
       
       }

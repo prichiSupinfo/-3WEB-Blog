@@ -5,6 +5,7 @@ import Register from './views/Register.vue'
 import Login from './views/Login.vue'
 import BlogDetail from './views/BlogDetail.vue'
 import BlogCreate from './views/BlogCreate.vue'
+import ConfirmEmail from './views/ConfirmEmail.vue'
 
 Vue.use(Router)
 
@@ -36,6 +37,11 @@ const router = new Router({
       path: '/blog-create',
       name: 'blogCreate',
       component: BlogCreate
+    },
+    {
+      path: '/confirm-email',
+      name: 'confirmEmail',
+      component: ConfirmEmail
     }
   ]
 })
