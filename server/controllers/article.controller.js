@@ -11,7 +11,6 @@ module.exports = {
             result: "success",
             info: "New article save",
         });
-        //TODO : send info to socket.io
     },
 
     read: async (request, response, next) =>{
@@ -19,18 +18,6 @@ module.exports = {
     },
 
     update: async (request, response, next) =>{
-        /**
-         * To update a article follow this JSON format :
-         * {
-         *      session: "user token session", //the user must be an admin
-         *      article: {
-         *                  id: "article id"
-         *                  title: "article title",
-         *                  text:  "article text",
-         *                  isHidden: boolean
-         *               }
-         * }
-         */
         var user = await userValidation.getUserBySession(request.body);
         var { id, title, text, isHidden } = request.body.article;
         var article = await Article.findById(id);
@@ -45,7 +32,6 @@ module.exports = {
             result: "success",
             info: "Article updated",
         });
-        //TODO : send info to socket.io
     },
 
     delete: async (request, response, next) =>{
