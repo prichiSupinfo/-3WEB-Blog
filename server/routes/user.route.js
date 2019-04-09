@@ -1,7 +1,6 @@
 const router = require('express-promise-router')();
-const User = require('../models/user.model'); 
 
-var userController = require('../controllers/user.controller');
+const userController = require('../controllers/user.controller');
 
 router.route('/register')
     .post(userController.register)

@@ -20,7 +20,8 @@ app.use(bodyParser.json());
 app.use(cors())
 
 //Routes
-app.use('/auth',require('./routes/user.route'))
+app.use('/auth', require('./routes/user.route'));
+app.use('/article', require('./routes/article.route'));
 
 app.get(['/', '/index'], function (request, response, next) {
     response.sendFile(path.resolve('../client/public/index.html'));
