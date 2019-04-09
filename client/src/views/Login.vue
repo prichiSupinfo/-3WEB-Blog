@@ -8,11 +8,11 @@
 
     <form>
       <div class="form-group">
-        <input type="text" name="username" placeholder="ENTER USERNAME" v-model="newUser.username">
+        <input type="text" name="username" placeholder="ENTER USERNAME" v-model="user.username">
       </div>
 
       <div class="form-group">
-        <input type="password" name="password" placeholder="ENTER PASSWORD" v-model="newUser.password">
+        <input type="password" name="password" placeholder="ENTER PASSWORD" v-model="user.password">
       </div>
       
       <button class="form-button" @click.prevent='login'>Log In</button>
@@ -25,7 +25,7 @@ import { mapActions } from 'vuex'
 export default {
   data(){
     return {
-      newUser: {
+      user: {
         username : '',
         password : '',
         isAdmin : false
@@ -39,8 +39,42 @@ export default {
     ]),
     
     login() {
-      let payload = this.newUser
-      this.userAuthAction(payload);
+      if (this.checkValidity()) {
+        const requestOptions = {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json', 
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "Access-Control-Allow-Credentials": "true"
+          },
+          body: JSON.stringify({ "username": this.user.username, "password": this.user.password })
+        }
+
+        var response = fetch('http://localhost:1337/auth/login', requestOptions)
+        .then(res => {
+          return res.json()
+        })
+        .then (json => {
+          if(json.session) {
+            console.log("loggedIn")
+            this.$router.push({name: 'home'})
+          }
+          else {
+            console.log(json.error);
+          }
+          
+        })
+        .catch (error => console.error(error))
+      }
+    },
+
+    checkValidity () {
+      if (!this.user.username || !this.user.password) {
+        return false 
+      }
+        return true
     }
   }
 }
