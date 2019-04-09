@@ -95,12 +95,12 @@ module.exports = {
         }
 
         user.validEmail = true;
+        user.uuid = '';
 
         await user.save();
 
-        response.status(200).json({ 
-            session: user.username + "." + user.uuid
-        });
+        response.writeHead(301, { "Location": 'http://localhost:8080/login' });
+        response.end()
     },
 
     secret: async(request, response, next) => {
