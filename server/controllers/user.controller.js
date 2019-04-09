@@ -99,7 +99,8 @@ module.exports = {
 
         await user.save();
 
-        response.status(301).send({ "Location": 'http://localhost:8080/login' });
+        response.writeHead(301, { "Location": 'http://localhost:8080/login' });
+        response.end()
     },
 
     secret: async(request, response, next) => {
