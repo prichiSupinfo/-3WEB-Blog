@@ -1,11 +1,9 @@
 export default {
   userAuthAction: ({ commit }, payload) => {
-    // login requested
-
-    // API call goes here
-
-    // Returns either success or failure
-
-    commit('userAuth', payload)
+    if (payload) {
+      commit('userAuth', { isLoggedIn: true })
+    } else {
+      commit('userAuth', { isLoggedIn: false })
+    }
   }
 }

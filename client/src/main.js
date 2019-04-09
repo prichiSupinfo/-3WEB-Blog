@@ -6,7 +6,11 @@ import store from './store/'
 // import scss
 import './assets/sass/index.sass'
 
+// use vue cookie
+var VueCookie = require('vue-cookie')
+
 Vue.config.productionTip = false
+Vue.use(VueCookie)
 
 new Vue({
   router,

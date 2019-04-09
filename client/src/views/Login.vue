@@ -58,7 +58,8 @@ export default {
         })
         .then (json => {
           if(json.session) {
-            console.log("loggedIn")
+            this.$cookie.set('token', json.session, 1)
+            this.userAuthAction(this.$cookie.get('token'))
             this.$router.push({name: 'home'})
           }
           else {
