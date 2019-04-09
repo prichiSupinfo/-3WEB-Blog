@@ -130,7 +130,7 @@ module.exports = {
     }
     },
 
-    likeArticles: async(request, response, next) => {
+    likedArticles: async(request, response, next) => {
     var user = await userValidation.getUserBySession(request.body);
     if (user){
         response.status(200).send({

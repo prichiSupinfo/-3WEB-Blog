@@ -44,6 +44,6 @@ router.route('/userProperties')
      * }
      */
 router.route('/userLikedArticles')
-.post(userController.likeArticles)
+.post(userController.likedArticles)
 
 module.exports = router;
