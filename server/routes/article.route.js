@@ -40,14 +40,14 @@ router.route('/create')
  * {
  *      session: "user token session", //the user must be an admin
  *      article: {
- *                  id: "article id"
+ *                  id: "article id",
  *                  title: "article title",
  *                  text:  "article text",
  *                  isHidden: boolean
  *               }
  * }
  */
-router.route('/update/:articleId')
+router.route('/update')
     .post(articleController.update);
 
 /**
@@ -85,5 +85,8 @@ router.route('/read/:articleId')
  */
 router.route('/like/:articleId')
     .post(articleController.like)
+
+router.route('/list')
+    .post(articleController.list)
 
 module.exports = router;
