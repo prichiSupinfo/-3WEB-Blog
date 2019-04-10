@@ -3,7 +3,7 @@ const userValidation = require('../utils/userValidation');
 const articleController = require('../controllers/article.controller');
 
 //Protect routes where the user must be authenticated and be an administrator
-router.use(['/create','/update/:articleId','/delete:articleId'], async (request, response, next)=> {
+router.use(['/create','/update','/delete'], async (request, response, next)=> {
     var user = await userValidation.getUserBySession(request.body);
     if(!user || !user.isAdmin){
         return response.status(403).send({ error:'wrong session token' });
@@ -13,7 +13,7 @@ router.use(['/create','/update/:articleId','/delete:articleId'], async (request,
 });
 
 //Protect routes where the user have to be authenticated
-router.use(['/read/:articleId', '/like/:articleId'], async (request, response, next) => {
+router.use(['/read', '/like'], async (request, response, next) => {
     var user = await userValidation.getUserBySession(request.body);
     if(!user){
         return response.status(403).send({ error:'wrong session token' });
@@ -51,7 +51,7 @@ router.route('/update')
     .post(articleController.update);
 
 /**
- * To update a article follow this JSON format :
+ * To delete a article follow this JSON format :
  * {
  *      session: "user token session", //the user must be an admin
  *      article: {
@@ -59,11 +59,11 @@ router.route('/update')
  *               }
  * }
  */
-router.route('/delete/:articleId')
+router.route('/delete')
     .post(articleController.delete);
 
 /**
- * To update a article follow this JSON format :
+ * To read a article follow this JSON format :
  * {
  *      session: "user token session",
  *      article: {
@@ -71,11 +71,11 @@ router.route('/delete/:articleId')
  *               }
  * }
  */
-router.route('/read/:articleId')
+router.route('/read')
     .post(articleController.read);
 
 /**
- * To update a article follow this JSON format :
+ * To like a article follow this JSON format :
  * {
  *      session: "user token session",
  *      article: {
@@ -83,8 +83,11 @@ router.route('/read/:articleId')
  *               }
  * }
  */
-router.route('/like/:articleId')
+router.route('/like')
     .post(articleController.like)
+
+router.route('/unlike')
+    .post(articleController.unlike)
 
 router.route('/list')
     .post(articleController.list)
