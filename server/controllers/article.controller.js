@@ -14,7 +14,10 @@ module.exports = {
     },
 
     read: async (request, response, next) =>{
-
+        var { id } = request.body.article;
+        var article = await Article.findById(id);
+        //TODO: returns comments with article
+        response.status(200).json({ article });
     },
 
     update: async (request, response, next) =>{
@@ -35,11 +38,63 @@ module.exports = {
     },
 
     delete: async (request, response, next) =>{
-
+        var { id } = request.body.article;
+        await Article.findByIdAndDelete(id);
+        
+        response.status(200).json({
+            result: "success",
+            info: "Article delted",
+        });
     },
     
     like: async (request, response, next) =>{
+        var user = await userValidation.getUserBySession(request.body);
+        var { id } = request.body.article;
+        if(user.likedArticles.includes(id)){
+            return response.status(403).json({
+                error: "User already like this article"
+            }); 
+        }
 
+        var article = await Article.findById(id);
+        article.likeNumber++;
+        await article.save();
+
+        user.likedArticles.push(article.id);
+        await user.save();
+
+        response.status(200).json({
+            result: "success",
+            info: "Article liked",
+        });
+    },
+
+    unlike: async (request, response, next) => {
+        var user = await userValidation.getUserBySession(request.body);
+        var { id } = request.body.article;
+        if(!user.likedArticles.includes(id)){
+            response.status(403).json({
+                error: "User can't unlike a article he don't like"
+            });
+        }
+
+        var article = await Article.findById(id);
+        article.likeNumber--;
+        await article.save();
+
+        for( var i = 0; i < user.likedArticles.length; i++){ 
+            if ( user.likedArticles[i] === article.id) {
+                user.likedArticles.splice(i, 1);
+                i--;
+            }
+        }
+
+        await user.save();
+
+        response.status(200).json({
+            result: "success",
+            info: "Article unliked",
+        });
     },
 
     list: async (request, response, next) =>{
