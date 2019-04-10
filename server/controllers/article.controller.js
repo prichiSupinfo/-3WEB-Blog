@@ -1,5 +1,16 @@
 const Article = require('../models/article.model');
+const User = require('../models/user.model');
 const userValidation = require('../utils/userValidation');
+
+function unlikeArticle(user, articleId){
+    for( var i = 0; i < user.likedArticles.length; i++){ 
+        if ( user.likedArticles[i] === articleId) {
+            user.likedArticles.splice(i, 1);
+            i--;
+        }
+    }
+    return user.likedArticles
+}
 
 module.exports = {
     create: async (request, response, next) =>{
@@ -14,9 +25,12 @@ module.exports = {
     },
 
     read: async (request, response, next) =>{
+        var user = await userValidation.getUserBySession(request.body);
         var { id } = request.body.article;
         var article = await Article.findById(id);
-        //TODO: protect hidden articles
+        if(!user.isAdmin && article.isHidden){
+            return response.status(403).json({error: "You don't have access to this article"})
+        }
         //TODO: returns comments with article
         response.status(200).json({ article });
     },
@@ -40,7 +54,15 @@ module.exports = {
 
     delete: async (request, response, next) =>{
         var { id } = request.body.article;
+        
+        var users = await User.find({likedArticles: id});
+        await users.forEach(async (user) => {
+            user.likedArticles = unlikeArticle(user, id);
+            await user.save();
+        })
+
         await Article.findByIdAndDelete(id);
+
         
         response.status(200).json({
             result: "success",
@@ -83,12 +105,7 @@ module.exports = {
         article.likeNumber--;
         await article.save();
 
-        for( var i = 0; i < user.likedArticles.length; i++){ 
-            if ( user.likedArticles[i] === article.id) {
-                user.likedArticles.splice(i, 1);
-                i--;
-            }
-        }
+        user.likedArticles = unlikeArticle(user, article.id);
 
         await user.save();
 

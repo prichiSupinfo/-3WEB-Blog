@@ -6,7 +6,7 @@ const userSchema = new Schema({
     password: { type: String, required: true },
     email: {type: String, required: true, lowercase: true, unique: true},
     uuid: String,
-    likedArticles: {type: Array},
+    likedArticles: {type: [String]},
     validEmail: {type: Boolean, required: true},
     isAdmin: {type: Boolean, required: true}
 });
