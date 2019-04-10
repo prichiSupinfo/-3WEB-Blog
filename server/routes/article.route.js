@@ -99,6 +99,18 @@ router.route('/unlike')
     .post(articleController.unlike)
 
 /**
+ * To know if the current user has like a article follow this JSON format :
+ * {
+ *      session: "user token session",
+ *      article: {
+ *                  id: "article id"
+ *               }
+ * }
+ */
+router.route('/hasLiked')
+    .post(articleController.hasLiked)
+
+/**
  * To list all article follow this JSON format :
  * {
  *      session: "user token session"

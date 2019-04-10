@@ -125,4 +125,17 @@ module.exports = {
         }
         response.status(200).json({articles});
     },
+
+    hasLiked: async (request, response, next) =>{
+        var user = await userValidation.getUserBySession(request.body);
+        var hasLiked = false;
+        
+        for( var i = 0; i < user.likedArticles.length; i++){ 
+            if ( user.likedArticles[i] === request.body.article.id) {
+                hasLiked = true;
+            }
+        }
+
+        response.status(200).json({hasLiked});
+    },
 }
