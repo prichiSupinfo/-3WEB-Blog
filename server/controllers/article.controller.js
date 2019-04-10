@@ -32,7 +32,19 @@ module.exports = {
             return response.status(403).json({error: "You don't have access to this article"})
         }
         //TODO: returns comments with article
-        response.status(200).json({ article });
+        var writer = await User.findById(article.writer);
+
+        response.status(200).json({ 
+            article :{
+                _id: article.id,
+                title: article.title,
+                text: article.text,
+                writer: writer.username,
+                likeNumber: article.likeNumber,
+                date: article.date,
+                isHidden: article.isHidden
+            }
+        });
     },
 
     update: async (request, response, next) =>{
@@ -118,11 +130,25 @@ module.exports = {
     list: async (request, response, next) =>{
         var user = await userValidation.getUserBySession(request.body);
         var articles = [];
+        
         if(user.isAdmin){
             articles = await Article.find({})
         } else {
             articles = await Article.find({isHidden: false})
         }
+
+        articles = await Promise.all(articles.map(async function(article){
+            var writer = await User.findById(article.writer);
+            return {
+                _id: article.id,
+                title: article.title,
+                text: article.text,
+                writer: writer.username,
+                likeNumber: article.likeNumber,
+                date: article.date,
+                isHidden: article.isHidden
+            }
+        }))
         response.status(200).json({articles});
     },
 
