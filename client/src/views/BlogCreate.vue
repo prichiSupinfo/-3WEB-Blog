@@ -7,21 +7,21 @@
         <form>
             <div class="blog-form-group">
                 <label for="blogTitle">Blog Title: </label>
-                <input type="text" id="blogTitle" placeholder="INSERT BLOG TITLE HERE..." />
+                <input type="text" id="blogTitle" placeholder="INSERT BLOG TITLE HERE..." v-model="blog.title"/>
             
             </div>
 
             <div class="blog-form-group">
                 <label for="blogDescription">Blog Description: </label>
-                <textarea type="text" id="blogDescription" placeholder="INSERT BLOG TITLE HERE..." />
+                <textarea type="text" id="blogDescription" placeholder="INSERT BLOG TITLE HERE..." v-model="blog.description"/>
             </div>
 
-            <div class="blog-form-checkbox">
+            <!-- <div class="blog-form-checkbox">
                 <label for="isHidden">Is Blog Hidden? </label>
                 <input type="checkbox" id="isHidden" checked/>
-            </div>
+            </div> -->
             
-            <button class="form-button">Create</button>
+            <button class="form-button" @click.prevent="submitArticle">Create</button>
         </form>
     </div>
 </template>
@@ -31,9 +31,55 @@ export default {
     data() {
         return {
             blog : {
-                title: '',
-                description: '',
-                isHidden: true,
+                title: null,
+                description: null
+            }
+        }
+    },
+
+    methods: {
+        checkValidity () {
+            if (!this.blog.title || !this.blog.description) {
+                return false 
+            }
+                return true
+        },
+
+        submitArticle () {
+            if(this.checkValidity()) {
+                const requestOptions = {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json', 
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "OPTIONS",
+                        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+                        "Access-Control-Allow-Credentials": "true"
+                    },
+                    body: JSON.stringify({
+                            "session": this.$cookie.get('token'), 
+                            "article": {
+                                'title': this.blog.title,
+                                'text': this.blog.description
+                            }
+                        })
+                }
+
+                var response = fetch('http://localhost:1337/article/create', requestOptions)
+                .then(res => {
+                    return res.json()
+                })
+                .then (json => {
+                    if(json.result === "success") {
+                        console.log(json.info)
+                       this.$router.push({name: 'home'}) 
+                    }
+                else {
+                    console.log(json.error);
+                }
+                
+                })
+                .catch (error => console.error(error))
             }
         }
     }
