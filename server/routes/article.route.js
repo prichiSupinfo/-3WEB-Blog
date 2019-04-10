@@ -86,9 +86,24 @@ router.route('/read')
 router.route('/like')
     .post(articleController.like)
 
+/**
+ * To unlike a article follow this JSON format :
+ * {
+ *      session: "user token session",
+ *      article: {
+ *                  id: "article id"
+ *               }
+ * }
+ */
 router.route('/unlike')
     .post(articleController.unlike)
 
+/**
+ * To list all article follow this JSON format :
+ * {
+ *      session: "user token session"
+ * }
+ */
 router.route('/list')
     .post(articleController.list)
 

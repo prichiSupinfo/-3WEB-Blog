@@ -16,6 +16,7 @@ module.exports = {
     read: async (request, response, next) =>{
         var { id } = request.body.article;
         var article = await Article.findById(id);
+        //TODO: protect hidden articles
         //TODO: returns comments with article
         response.status(200).json({ article });
     },
@@ -98,6 +99,13 @@ module.exports = {
     },
 
     list: async (request, response, next) =>{
-
+        var user = await userValidation.getUserBySession(request.body);
+        var articles = [];
+        if(user.isAdmin){
+            articles = await Article.find({})
+        } else {
+            articles = await Article.find({isHidden: false})
+        }
+        response.status(200).json({articles});
     },
 }
