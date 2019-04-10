@@ -35,7 +35,8 @@ export default {
 
   methods: {
     ...mapActions([
-      'userAuthAction'
+      'userAuthAction',
+      'userPropsAction'
     ]),
     
     login() {
@@ -60,6 +61,7 @@ export default {
           if(json.session) {
             this.$cookie.set('token', json.session, 1)
             this.userAuthAction(this.$cookie.get('token'))
+            this.userPropsAction(this.$cookie.get('token'))
             this.$router.push({name: 'home'})
           }
           else {

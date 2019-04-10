@@ -8,8 +8,8 @@
     <div id="nav" v-else>
       <router-link to="/">Articles</router-link> |
       <router-link to="/new-blog">New Articles</router-link> |
-      <router-link to="/register">Liked Articles</router-link> <p style="display:inline"> | </p>
-      <router-link to="/blog-create">Add Article</router-link> |
+      <router-link to="/liked-articles">Liked Articles</router-link> <p v-if="status.isAdmin" style="display:inline"> | </p>
+      <router-link to="/blog-create" v-if="status.isAdmin">Add Article</router-link> |
       <router-link to="/login"  @click.native="logout">Logout</router-link>
     </div>
     <router-view/>
@@ -27,14 +27,40 @@ export default {
 
   methods: {
     ...mapActions([
-      'userAuthAction'
+      'userAuthAction',
+      'userPropsAction'
     ]),
 
     logout (e) {
       e.preventDefault
-      this.$cookie.delete('token')
-      this.userAuthAction(this.$cookie.get('token'))
+      const requestOptions = {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json', 
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "Access-Control-Allow-Credentials": "true"
+          },
+          body: JSON.stringify({ 'session': this.$cookie.get('token') })
+        }
 
+        var response = fetch('http://localhost:1337/auth/logout', requestOptions)
+        .then(res => {
+          return res.json()
+        })
+        .then (json => {
+          if(json.logout === 'sucess') {
+            this.$cookie.delete('token')
+            this.userAuthAction(this.$cookie.get('token'))
+            this.$router.push({name: 'home'})
+          }
+          else {
+            console.log(json.error);
+          }
+          
+        })
+        .catch (error => console.error(error))
     },
   
     userLoggedIn() {
@@ -48,6 +74,7 @@ export default {
 
   mounted() {
     this.userAuthAction(this.$cookie.get('token'))
+    this.userPropsAction(this.$cookie.get('token'))
   }
 }
 </script>
