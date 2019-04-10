@@ -131,7 +131,7 @@ module.exports = {
         var hasLiked = false;
         
         for( var i = 0; i < user.likedArticles.length; i++){ 
-            if ( user.likedArticles[i] === articleId) {
+            if ( user.likedArticles[i] === request.body.article.id) {
                 hasLiked = true;
             }
         }
