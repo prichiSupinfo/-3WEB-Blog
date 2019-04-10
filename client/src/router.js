@@ -30,11 +30,6 @@ const router = new Router({
       component: Login
     },
     {
-      path: '/:id',
-      name: 'blogDetail',
-      component: BlogDetail
-    },
-    {
       path: '/blog-create',
       name: 'blogCreate',
       component: BlogCreate
@@ -48,6 +43,11 @@ const router = new Router({
       path: '/liked-articles',
       name: 'likedArticles',
       component: LikedArticle
+    },
+    {
+      path: '/:id',
+      name: 'blogDetail',
+      component: BlogDetail
     }
   ]
 })

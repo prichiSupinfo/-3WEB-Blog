@@ -29,9 +29,7 @@
 </template>
 
 <script>
-import { constants } from 'crypto';
-import { Promise } from 'q';
-import { error } from 'util';
+import { userService } from '@/services/'
 export default {
   data () {
     return {
@@ -46,34 +44,16 @@ export default {
   methods: {
     register () {
       if(this.checkValidity()) {
-        //TODO: API CALL
-        const requestOptions = {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json', 
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            "Access-Control-Allow-Credentials": "true"
-          },
-          body: JSON.stringify({ "username": this.newUser.username, "email": this.newUser.email, "password": this.newUser.password })
-        }
-
-        var response = fetch('http://localhost:1337/auth/register', requestOptions)
-        .then(res => {
-          return res.json()
-        })
-        .then (json => {
-          if(json.success) {
-            console.log("registered")
-            this.$router.push({name: 'confirmEmail'})
+        userService.register(this.newUser.username, this.newUser.password, this.newUser.email).then(json => {
+          if (json.success) {
+            console.log('registered')
+            this.$router.push({ name: 'confirmEmail' })
+          } else {
+            console.log(json.error)
           }
-          else {
-            console.log(json.error);
-          }
-          
         })
-        .catch (error => console.error(error))
+        .catch(error => console.error(error))
+        
       
       }
     },

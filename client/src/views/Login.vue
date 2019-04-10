@@ -21,7 +21,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex' 
+import { mapActions } from 'vuex'
+import { userService } from '@/services/' 
 export default {
   data(){
     return {
@@ -41,35 +42,17 @@ export default {
     
     login() {
       if (this.checkValidity()) {
-        const requestOptions = {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json', 
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            "Access-Control-Allow-Credentials": "true"
-          },
-          body: JSON.stringify({ "username": this.user.username, "password": this.user.password })
-        }
-
-        var response = fetch('http://localhost:1337/auth/login', requestOptions)
-        .then(res => {
-          return res.json()
-        })
-        .then (json => {
-          if(json.session) {
+        userService.login(this.user.username, this.user.password).then(json => {
+          if (json.session) {
             this.$cookie.set('token', json.session, 1)
             this.userAuthAction(this.$cookie.get('token'))
             this.userPropsAction(this.$cookie.get('token'))
-            this.$router.push({name: 'home'})
+            this.$router.push({ name: 'home' })
+          } else {
+            console.log(json.error)
           }
-          else {
-            console.log(json.error);
-          }
-          
         })
-        .catch (error => console.error(error))
+        .catch(error => console.error(error))
       }
     },
 
