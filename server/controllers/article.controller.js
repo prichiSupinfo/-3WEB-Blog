@@ -25,9 +25,12 @@ module.exports = {
     },
 
     read: async (request, response, next) =>{
+        var user = await userValidation.getUserBySession(request.body);
         var { id } = request.body.article;
         var article = await Article.findById(id);
-        //TODO: protect hidden articles
+        if(!user.isAdmin && article.isHidden){
+            return response.status(403).json({error: "You don't have access to this article"})
+        }
         //TODO: returns comments with article
         response.status(200).json({ article });
     },
