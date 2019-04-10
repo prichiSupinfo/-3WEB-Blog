@@ -17,4 +17,33 @@ router.route('/secret')
 router.route('/emailValidation')
     .post(userController.validateEmail)
 
+    /**in:
+     * {
+     *  session: "token"
+     * }
+     * 
+     * out:
+     * {
+     *  username: String,
+     *  id: String,
+     *  isAdmin: boolean,
+     *  email: String
+     * }
+     */
+router.route('/userProperties')
+    .post(userController.userProperties)
+
+    /**in:
+     * {
+     *  session: "token"
+     * }
+     * 
+     * out:
+     * {
+     *  likedArticles:[array d'article id]
+     * }
+     */
+router.route('/userLikedArticles')
+.post(userController.likedArticles)
+
 module.exports = router;

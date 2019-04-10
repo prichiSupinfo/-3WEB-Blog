@@ -112,5 +112,34 @@ module.exports = {
 
         console.log('User manage to get secret');
         response.status(200).send({ secret: "secret info"});
+    },
+
+    userProperties: async(request, response, next) => {
+    var user = await userValidation.getUserBySession(request.body);
+    if (user){
+        response.status(200).send({
+            username: user.username,
+            id: user.id,
+            isAdmin: user.isAdmin,
+            email: user.email
+        })
+    }else{
+        response.status(403).send({
+            error: 'wrong session token'
+        })
+    }
+    },
+
+    likedArticles: async(request, response, next) => {
+    var user = await userValidation.getUserBySession(request.body);
+    if (user){
+        response.status(200).send({
+            likedArticles: user.likedArticles
+        })
+    }else{
+        response.status(403).send({
+            error: 'wrong session token'
+        })
+    }
     }
 }
