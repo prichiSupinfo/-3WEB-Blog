@@ -11,7 +11,7 @@
       <h1>{{title}}</h1>
       <p class="text">{{text | truncate(150)}}</p>
       <p class="read-more">
-        <a :href="id">Read More</a> 
+        <a :href="createLink">Read More</a> 
       </p>
     </div>
   </div>
@@ -36,9 +36,9 @@ export default {
       return value
     }
   },
-  methods: {
+  computed: {
     createLink () {
-      return ("/blog/" + this.index)
+      return ("/blog/" + this.id)
     }
   }
 }

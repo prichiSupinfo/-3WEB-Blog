@@ -7,6 +7,7 @@ import BlogDetail from './views/BlogDetail.vue'
 import BlogCreate from './views/BlogCreate.vue'
 import ConfirmEmail from './views/ConfirmEmail.vue'
 import LikedArticle from './views/LikedArticle.vue'
+import BlogEdit from './views/BlogEdit.vue'
 
 Vue.use(Router)
 
@@ -45,9 +46,14 @@ const router = new Router({
       component: LikedArticle
     },
     {
-      path: '/:id',
+      path: '/blog/:id',
       name: 'blogDetail',
       component: BlogDetail
+    },
+    {
+      path: '/blog-edit/:id',
+      name: 'blogEdit',
+      component: BlogEdit
     }
   ]
 })
