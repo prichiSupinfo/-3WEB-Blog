@@ -23,16 +23,16 @@
 <script>
 import { mapState } from 'vuex'
 export default {
+    props: {
+      article : {
+          type: Object
+      }
+    
+    },
+
     data() {
         return {
             hasLiked : false,
-            article: {
-                _id: '',
-                title: '',
-                text: '',
-                writer: '',
-                date: '',
-            }
         }
     },
     computed: {
@@ -118,40 +118,6 @@ export default {
             
         },
 
-        fetchBlogPost () {
-            const requestOptions = {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json', 
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "OPTIONS",
-                    "Access-Control-Allow-Headers": "Content-Type, Authorization",
-                    "Access-Control-Allow-Credentials": "true"
-                },
-                body: JSON.stringify({ 
-                    "session": this.$cookie.get('token'),
-                    "article": {
-                        "id": this.$route.params.id
-                    }
-                    })
-            }
-
-            var response = fetch('http://localhost:1337/article/read', requestOptions)
-            .then(res => {
-                return res.json()
-            })
-                .then (json => {
-                if(json.article) {
-                    this.article = json.article
-                }
-                else {
-                    console.log(json.error);
-                }
-            
-            })
-            .catch (error => console.error(error))
-        },
-
         hasUserLiked() {
             const requestOptions = {
                 method: 'POST',
@@ -226,7 +192,6 @@ export default {
     },
 
     beforeMount() {
-        this.fetchBlogPost()
         this.hasUserLiked()
     }
 }
