@@ -5,12 +5,14 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var cors = require('cors');
 
+
 var config = require('./config.json');
 var port = config.port;
 
 mongoose.connect(config.dbURL, { useNewUrlParser: true })
 
 var app = express();
+
 app.use(express.static('../client/public'));
 
 
@@ -27,6 +29,22 @@ app.get(['/', '/index'], function (request, response, next) {
     response.sendFile(path.resolve('../client/public/index.html'));
 })
 
+
+
 //Start
-app.listen(port);
+var server = app.listen(port);
 console.log("server ready on port " + port);
+
+var io = require('socket.io').listen(server);
+
+// IO Starts here
+io.of('/comments').on('connection', (socket) => {
+    console.log("connected")
+    socket.on("joinRoom", (room) => {
+        socket.join(room);
+        socket.on('comment', (msg)=> {
+            console.log(msg);
+        })
+        
+    });
+});

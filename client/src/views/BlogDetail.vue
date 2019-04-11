@@ -22,6 +22,8 @@
 import CommentInput from '@/components/CommentInput.vue'
 import Comment from '@/components/Comment.vue'
 import Blog from '@/components/Blog.vue'
+
+
 export default {
     components: {
         CommentInput,
