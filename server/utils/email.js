@@ -37,15 +37,16 @@ module.exports = {
         const mailOptions = {
             from: 'mail4supproject@gmail.com',
             to: user.email,
-            subject: article.comments[article.comments.length-1].writer + ' write a comment on your Article ' + article.title,
+            subject: article.comments[0].username + ' write a comment on your Article ' + article.title,
             html:   `
                     <h1>You have a new comment</h1>
-                    <form action="http://localhost:${config.port}/auth/emailValidation" method="post">
-                    <input type="hidden" name="username" value="${user.username}"/>
-                    <input type="hidden" name="uuid" value="${user.uuid}"/>
-                    <input type="submit" value="Validate my brand new account :D"/>
-                    </form>
+                    <a href="http://localhost:8080/blog/${article.id}">My article</a>
                     `
         }
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.log(error);
+            }
+        });
     }
 }

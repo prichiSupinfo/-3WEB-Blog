@@ -1,7 +1,8 @@
 export default {
   status: {
     isLoggedIn: false,
-    isAdmin: false
+    isAdmin: false,
+    username: ''
   }
 
 }

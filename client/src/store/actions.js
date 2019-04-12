@@ -31,8 +31,7 @@ export default {
         if (json.error) {
           console.log(json.error)
         } else {
-          console.log('gotcha')
-          commit('userProps', json.isAdmin)
+          commit('userProps', json)
         }
       })
       .catch(error => console.error(error))

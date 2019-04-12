@@ -41,6 +41,7 @@ var io = require('socket.io').listen(server);
 const Article = require('./models/article.model');
 const User = require('./models/user.model');
 const userValidation = require('./utils/userValidation');
+const emailSender = require("./utils/email");
 
 // IO Starts here
 io.of('/comments').on('connection', (socket) => {
@@ -50,30 +51,17 @@ io.of('/comments').on('connection', (socket) => {
             // Adding comment to
             //console.log(request)
             comment(room, request);
-
-            socket.in(room).emit('newComment', request.comment)
+            
+            socket.to(room).emit('newComment', request.comment)
         })
         
     });
 });
 
 async function comment (id, request) {
-    console.log(request.session);
-    var user = await userValidation.getUserBySession(request.session);
-    if (!user){
-        return ;
-    } 
-    
     var comment = request.comment;
     var article = await Article.findById(id);
-    article.comments.push(comment);
-    await alertWriter(article);
+    article.comments.unshift(comment);
     await article.save(); 
-    console.log(comment);
-    
-    
-}
-
-async function alertWriter(article){
-
+    await emailSender.sendAlertCommentEmail(await User.findById(article.writer),article);
 }

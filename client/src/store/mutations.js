@@ -11,6 +11,7 @@ export default {
   },
 
   userProps: (state, payload) => {
-    state.status.isAdmin = payload
+    state.status.isAdmin = payload.isAdmin
+    state.status.username = payload.username
   }
 }

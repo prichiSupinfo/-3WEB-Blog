@@ -5,8 +5,11 @@
 
         <div class="comments">
             
-            <CommentInput @addComment="addComment($event)"/>
-            <Comment v-for="(comment, index) in article.comments" :text="comment.text" :key="index"/>
+            <CommentInput @addComment="addComment($event)" :username="status.username"/>
+            <Comment v-for="(comment, index) in article.comments" 
+            :text="comment.text" :key="index"
+            :username="comment.username" :date="comment.date"
+            />
             
             
         </div>
@@ -19,6 +22,7 @@
 import CommentInput from '@/components/CommentInput.vue'
 import Comment from '@/components/Comment.vue'
 import Blog from '@/components/Blog.vue'
+import {mapState} from 'vuex'
 
 
 export default {
@@ -41,7 +45,13 @@ export default {
 
             
         }
-    }, 
+    },
+    
+    computed: {
+        ...mapState([
+            'status'
+        ])
+    },
 
     methods: {
         fetchBlogPost () {
@@ -79,8 +89,8 @@ export default {
         },
 
         addComment (comment) {
-            this.article.comments.push(comment)
-            console.log(this.article.comments)
+            this.article.comments.unshift(comment)
+            console.log(comment)
         }
     },
 

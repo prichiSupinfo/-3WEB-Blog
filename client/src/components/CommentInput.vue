@@ -2,13 +2,13 @@
     <div class="comment-card">
         <div class="comment-block">
             <div class="profile-name" >
-                <p>funkib00y</p>
+                <p>{{username}}</p>
             </div>
                     
             <form action="">
-                <textarea name="" id="" cols="30" rows="3" placeholder="ADD COMMENT..." v-model="comment.text"></textarea>
+                <textarea name="" id="" cols="30" rows="3" placeholder="ADD COMMENT..." v-model="comment.text" @keyup.enter.prevent="submitComment"></textarea>
             </form>
-            <div class="comment-send" @click.prevent="submitComment"><p>SEND</p></div>
+            <div class="comment-send" @click="submitComment" ><p>SEND</p></div>
         </div>
     </div>
 </template>
@@ -19,9 +19,15 @@ import io from 'socket.io-client';
 var socket
 
 export default {
+    props: {
+        username: String
+    },
     data () {
         return {
             comment: {
+                text: null
+            },
+            sendComment: {
                 text: null
             }
         }
@@ -40,9 +46,14 @@ export default {
                 socket.emit('comment',{
                     'session': this.$cookie.get('token'),
                     'comment': {
-                        text: this.comment.text
+                        text: this.comment.text,
+                        username: this.username,
+                        date: new Date()
                     }
                 })
+                this.sendComment = this.comment
+                //this.$emit('addComment', this.sendComment)
+                
                 this.comment.text = ''
             }
         }
