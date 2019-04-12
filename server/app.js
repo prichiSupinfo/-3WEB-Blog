@@ -52,7 +52,8 @@ io.of('/comments').on('connection', (socket) => {
             //console.log(request)
             comment(room, request);
             
-            socket.to(room).emit('newComment', request.comment)
+            socket.to(room).emit('newComment', request.comment);
+            socket.emit('newComment', request.comment);
         })
         
     });
