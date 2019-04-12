@@ -31,5 +31,22 @@ module.exports = {
                 console.log(error);
             }
         });
+    },
+
+    sendAlertCommentEmail: async (user, article) => {
+        const mailOptions = {
+            from: 'mail4supproject@gmail.com',
+            to: user.email,
+            subject: article.comments[0].username + ' write a comment on your Article ' + article.title,
+            html:   `
+                    <h1>You have a new comment</h1>
+                    <a href="http://localhost:8080/blog/${article.id}">My article</a>
+                    `
+        }
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.log(error);
+            }
+        });
     }
 }
