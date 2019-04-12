@@ -8,6 +8,7 @@ const articleSchema = new Schema({
     likeNumber: {type: Number, require: true},
     date: {type: Date, required: true},
     isHidden: {type:Boolean, required: true},
+    comments: {type: [Object], required: false}
 });
 
 var Article = mongoose.model('Article', articleSchema);

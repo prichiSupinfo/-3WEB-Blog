@@ -5,12 +5,9 @@
 
         <div class="comments">
             
-            <CommentInput />
-            <Comment />
-            <Comment />
-            <Comment />
-            <Comment />
-            <Comment />
+            <CommentInput @addComment="addComment($event)"/>
+            <Comment v-for="(comment, index) in article.comments" :text="comment.text" :key="index"/>
+            
             
         </div>
         
@@ -39,7 +36,10 @@ export default {
                 text: '',
                 writer: '',
                 date: '',
-            }
+                comments: []
+            },
+
+            
         }
     }, 
 
@@ -77,6 +77,10 @@ export default {
             })
             .catch (error => console.error(error))
         },
+
+        addComment (comment) {
+            this.article.comments.push(comment)
+        }
     },
 
     beforeMount() {

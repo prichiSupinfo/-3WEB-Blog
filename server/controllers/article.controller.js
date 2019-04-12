@@ -16,7 +16,7 @@ module.exports = {
     create: async (request, response, next) =>{
         var user = await userValidation.getUserBySession(request.body);
         var { title, text } = request.body.article;
-        var article = new Article({ title, text,  writer: user.id, likeNumber: 0, date: Date.now(), isHidden: true });
+        var article = new Article({ title, text,  writer: user.id, likeNumber: 0, date: Date.now(), isHidden: true, comments: [] });
         await article.save();
         response.status(200).json({ 
             result: "success",
@@ -42,7 +42,8 @@ module.exports = {
                 writer: writer.username,
                 likeNumber: article.likeNumber,
                 date: article.date,
-                isHidden: article.isHidden
+                isHidden: article.isHidden,
+                comments: article.comments
             }
         });
     },
@@ -164,4 +165,5 @@ module.exports = {
 
         response.status(200).json({hasLiked});
     },
+    
 }
