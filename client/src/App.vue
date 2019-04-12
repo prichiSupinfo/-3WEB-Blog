@@ -7,7 +7,6 @@
 
     <div id="nav" v-else>
       <router-link to="/">Articles</router-link> |
-      <router-link to="/new-article">New Articles</router-link> |
       <router-link to="/liked-articles">Liked Articles</router-link> <p v-if="status.isAdmin" style="display:inline"> | </p>
       <router-link to="/blog-create" v-if="status.isAdmin">Add Article</router-link> |
       <router-link to="/login"  @click.native="logout">Logout</router-link>
