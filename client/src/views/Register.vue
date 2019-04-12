@@ -62,6 +62,10 @@ export default {
       if (!this.newUser.username || !this.newUser.email || !this.newUser.password || !this.newUser.confirmPassword) {
         return false 
       }
+
+      if(this.newUser.password != this.newUser.confirmPassword) {
+        return false
+      }
         return true
     }
   }
