@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
     data() {
         return {
@@ -35,6 +36,12 @@ export default {
                 description: null
             }
         }
+    },
+
+    computed: {
+        ...mapState([
+            'status'
+        ])
     },
 
     methods: {
@@ -81,6 +88,12 @@ export default {
                 })
                 .catch (error => console.error(error))
             }
+        }
+    },
+
+    beforeMount () {
+        if(!this.status.isAdmin){
+            this.$router.push('/')
         }
     }
 }

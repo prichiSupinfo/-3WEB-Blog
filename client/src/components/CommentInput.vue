@@ -29,7 +29,8 @@ export default {
             },
             sendComment: {
                 text: null
-            }
+            },
+            notifCount: 0
         }
     },
 
@@ -63,6 +64,7 @@ export default {
         socket = io('http://localhost:1337/comments')
         socket.emit('joinRoom', this.$route.params.id)
         socket.on('newComment', (comment) => {
+            document.title = '(' + ++this.notifCount + ') client' 
             this.$emit('addComment', comment)
         })
         
