@@ -52,7 +52,7 @@ io.of('/comments').on('connection', (socket) => {
             //console.log(request)
             comment(room, request);
 
-            socket.in(room).emit('newComment', request.comment)
+            socket.to(room).emit('newComment', request.comment)
         })
         
     });
@@ -65,7 +65,7 @@ async function comment (id, request) {
     
     var comment = request.comment;
     var article = await Article.findById(id);
-    article.comments.push(comment);
+    article.comments.unshift(comment);
     await article.save(); 
     console.log(comment);
     
