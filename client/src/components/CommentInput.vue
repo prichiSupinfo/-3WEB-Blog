@@ -8,7 +8,7 @@
             <form action="">
                 <textarea name="" id="" cols="30" rows="3" placeholder="ADD COMMENT..." v-model="comment.text" @keyup.enter.prevent="submitComment"></textarea>
             </form>
-            <div class="comment-send" @click="submitComment" ><p>SEND</p></div>
+            <div class="comment-send" @click.prevent="submitComment" ><p>SEND</p></div>
         </div>
     </div>
 </template>
@@ -25,9 +25,6 @@ export default {
     data () {
         return {
             comment: {
-                text: null
-            },
-            sendComment: {
                 text: null
             },
             notifCount: 0
@@ -55,7 +52,7 @@ export default {
                 this.sendComment = this.comment
                 //this.$emit('addComment', this.sendComment)
                 
-                this.comment.text = ''
+                this.comment.text = null
             }
         }
     },
