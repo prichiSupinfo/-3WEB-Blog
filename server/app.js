@@ -51,6 +51,8 @@ io.of('/comments').on('connection', (socket) => {
             // Adding comment to
             //console.log(request)
             comment(room, request);
+
+            socket.in(room).emit('newComment', request.comment)
         })
         
     });

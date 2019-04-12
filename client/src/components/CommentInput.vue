@@ -43,7 +43,6 @@ export default {
                         text: this.comment.text
                     }
                 })
-                this.$emit('addComment', this.comment)
                 this.comment.text = ''
             }
         }
@@ -52,6 +51,9 @@ export default {
     mounted () {
         socket = io('http://localhost:1337/comments')
         socket.emit('joinRoom', this.$route.params.id)
+        socket.on('newComment', (comment) => {
+            this.$emit('addComment', comment)
+        })
         
     }
 }

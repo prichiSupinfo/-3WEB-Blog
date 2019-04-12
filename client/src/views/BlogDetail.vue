@@ -80,6 +80,7 @@ export default {
 
         addComment (comment) {
             this.article.comments.push(comment)
+            console.log(this.article.comments)
         }
     },
 
