@@ -21,7 +21,7 @@
                 <input type="checkbox" id="isHidden" v-model="blog.isHidden"/>
             </div>
             
-            <button class="form-button" @click.prevent="submitArticle">Create</button>
+            <button class="form-button" @click.prevent="submitArticle">Update</button>
         </form>
     </div>
 </template>
