@@ -44,7 +44,6 @@ const userValidation = require('./utils/userValidation');
 
 // IO Starts here
 io.of('/comments').on('connection', (socket) => {
-    console.log("connected")
     socket.on("joinRoom", (room) => {
         socket.join(room);
         socket.on('comment', (request)=> {
@@ -61,13 +60,20 @@ io.of('/comments').on('connection', (socket) => {
 async function comment (id, request) {
     console.log(request.session);
     var user = await userValidation.getUserBySession(request.session);
-    //if (!user) return;
+    if (!user){
+        return ;
+    } 
     
     var comment = request.comment;
     var article = await Article.findById(id);
     article.comments.push(comment);
+    await alertWriter(article);
     await article.save(); 
     console.log(comment);
     
     
+}
+
+async function alertWriter(article){
+
 }

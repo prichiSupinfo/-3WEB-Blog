@@ -31,5 +31,21 @@ module.exports = {
                 console.log(error);
             }
         });
+    },
+
+    sendAlertCommentEmail: async (user, article) => {
+        const mailOptions = {
+            from: 'mail4supproject@gmail.com',
+            to: user.email,
+            subject: article.comments[article.comments.length-1].writer + ' write a comment on your Article ' + article.title,
+            html:   `
+                    <h1>You have a new comment</h1>
+                    <form action="http://localhost:${config.port}/auth/emailValidation" method="post">
+                    <input type="hidden" name="username" value="${user.username}"/>
+                    <input type="hidden" name="uuid" value="${user.uuid}"/>
+                    <input type="submit" value="Validate my brand new account :D"/>
+                    </form>
+                    `
+        }
     }
 }
