@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
     data() {
         return {
@@ -36,6 +37,12 @@ export default {
                 isHidden: true
             }
         }
+    },
+
+    computed: {
+        ...mapState([
+            'status'
+        ])
     },
 
     methods: {
@@ -122,6 +129,9 @@ export default {
         }
     },
     beforeMount () {
+        if(!this.status.isAdmin){
+            this.$router.push('/')
+        }
         this.fetchBlogPost()
     }
 }
