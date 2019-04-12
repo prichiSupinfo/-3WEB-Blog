@@ -1,29 +1,63 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="nav" v-if="!status.isLoggedIn">
+      <router-link to="/register">Register</router-link> |
+      <router-link to="/login">Login</router-link>
+    </div>
+
+    <div id="nav" v-else>
+      <router-link to="/">Articles</router-link> |
+      <router-link to="/new-article">New Articles</router-link> |
+      <router-link to="/liked-articles">Liked Articles</router-link> <p v-if="status.isAdmin" style="display:inline"> | </p>
+      <router-link to="/blog-create" v-if="status.isAdmin">Add Article</router-link> |
+      <router-link to="/login"  @click.native="logout">Logout</router-link>
     </div>
     <router-view/>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import { mapState, mapActions } from 'vuex'
+import { userService } from '@/services/'
+export default {
+  computed : {
+    ...mapState([
+      'status'
+    ])
+  },
+
+  methods: {
+    ...mapActions([
+      'userAuthAction',
+      'userPropsAction'
+    ]),
+
+    logout (e) {
+      e.preventDefault
+      userService.logout(this.$cookie.get('token')).then(json => {
+        if (json.logout === 'sucess') {
+          this.$cookie.delete('token')
+          this.userAuthAction(this.$cookie.get('token'))
+          this.$router.push({ name: 'home' })
+        } else {
+          console.log(json.error)
+        }
+      })
+      .catch(error => console.error(error))
+    },
+  
+    userLoggedIn() {
+      if(this.$cookie.get('token')){
+        return true
+      }
+
+      return false
     }
+  },
+
+  mounted() {
+    this.userAuthAction(this.$cookie.get('token'))
+    this.userPropsAction(this.$cookie.get('token'))
   }
 }
-</style>
+</script>

@@ -1,0 +1,4 @@
+{
+    "dbURL": "mongodb://localhost/blog",
+    "port": 1337
+}
